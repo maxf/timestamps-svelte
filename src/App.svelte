@@ -1,6 +1,7 @@
 <script>
+ import { onMount } from 'svelte';
 
- const appState = {
+ let appState = {
    timestamps: [], // array of Date
    newTimestamp: null // null or { date, month, year, hours, minutes }
  };
@@ -47,17 +48,22 @@
  };
 
 
-  const updateFromLocalStorage = function() {
-    const savedValue = localStorage.getItem('timestamps') || [];
-    const newAppState = appState;
-    try {
-      newAppState.timestamps = JSON.parse(savedValue).map(isoDate => new Date(Date.parse(isoDate)));
-    } catch (error) {
-      newAppState.timestamps = [];
-      localStorage.setItem('timestamps', '[]');
-    }
-    return newAppState;
-  };
+ const updateFromLocalStorage = function() {
+   const savedValue = localStorage.getItem('timestamps') || [];
+   const newAppState = appState;
+   try {
+     newAppState.timestamps = JSON.parse(savedValue).map(isoDate => new Date(Date.parse(isoDate)));
+   } catch (error) {
+     newAppState.timestamps = [];
+     localStorage.setItem('timestamps', '[]');
+   }
+   return newAppState;
+ };
+
+ onMount(() => {
+   appState = updateFromLocalStorage();
+ });
+
 </script>
 
 <!-- ############################################################################### -->
