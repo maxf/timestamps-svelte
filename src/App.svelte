@@ -79,6 +79,7 @@
   }
 
   button {
+    padding: 0;
     border: 1px solid white;
     border-radius: 10px;
     background: #32f;
