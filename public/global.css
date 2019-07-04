@@ -65,7 +65,3 @@ button:focus {
   display: inline-block;
   vertical-align: top;
 }
-
-.timestamp-manager + .timestamp-manager {
-  margin-left: 3px;
-}

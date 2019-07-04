@@ -99,9 +99,10 @@
 
   .component {
     background: #ddd;
+    border: 1px solid #64f;
     border-radius: 10px;
     padding: 10px;
-    width: 250px;
+    width: 206px;
   }
 
   .date-2 { width: 2em; }
