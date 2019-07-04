@@ -1,10 +1,18 @@
-import App from './App.svelte';
+import TimestampManager from './TimestampManager.svelte';
 
-const app = new App({
-	target: document.body,
-	props: {
-		name: 'world'
-	}
+const ts1 = new TimestampManager({
+  target: document.getElementById('ts1'),
+  props: {
+    name: 'TS1'
+  }
 });
 
-export default app;
+const ts2 = new TimestampManager({
+  target: document.getElementById('ts2'),
+  props: {
+    name: 'TS2'
+  }
+});
+
+//export default ts1;
+//export default ts2;

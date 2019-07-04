@@ -1,12 +1,51 @@
 <script>
  import { onMount } from 'svelte';
 
- let appState = {
+ export let name;
+
+ const appState = {
    timestamps: [], // array of Date
    newTimestamp: null // null or { date, month, year, hours, minutes }
  };
 
  const formatTimestamp = d => `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`;
+
+
+ const getFromLocalStorage = name => {
+   const storedData = localStorage.getItem('timestamps');
+   try {
+     const data = JSON.parse(storedData)[name];
+     return data.map(isoDate => new Date(Date.parse(isoDate)));
+   } catch (error) {
+     console.log('failed to parse localstorage data 1', error);
+     return [];
+   }
+ };
+
+ const saveToLocalStorage = (name, timestamps) => {
+   const storedData = localStorage.getItem('timestamps') || '{}';
+   let data;
+   try {
+     data = JSON.parse(storedData);
+   } catch (error) {
+     console.log('failed to parse localstorage data 2', error);
+     data = {};
+   }
+   data[name] = timestamps;
+   localStorage.setItem('timestamps', JSON.stringify(data));
+ };
+
+ const deleteFromLocalStorage = name => {
+   const storedData = localStorage.getItem('timestamps');
+   try {
+     const data = JSON.parse(storedData);
+     delete data[name];
+     localStorage.setItem('timestamps', JSON.stringify(data));
+   } catch (error) {
+     console.log('failed to parse localstorage data 3', error);
+     localStorage.removeItem('timestamps');
+   }
+ };
 
  const prepareNewTimestamp = () => {
    var now = new Date();
@@ -22,7 +61,7 @@
  const addTimestamp = () => {
    const d = appState.newTimestamp;
    appState.timestamps.push(new Date(d.year, d.month, d.date, d.hours, d.minutes));
-   localStorage.setItem('timestamps', JSON.stringify(appState.timestamps));
+   saveToLocalStorage(name, appState.timestamps);
    appState.newTimestamp = null;
  };
 
@@ -36,7 +75,7 @@
  const reset = () => {
    appState.timestamps = [];
    appState.newTimestamp = null;
-   localStorage.setItem('timestamps','[]');
+   deleteFromLocalStorage(name);
  };
 
  // copy the timestamps to the clipboard
@@ -47,21 +86,9 @@
    navigator.clipboard.writeText(copyText);
  };
 
-
- const updateFromLocalStorage = function() {
-   const savedValue = localStorage.getItem('timestamps') || [];
-   const newAppState = appState;
-   try {
-     newAppState.timestamps = JSON.parse(savedValue).map(isoDate => new Date(Date.parse(isoDate)));
-   } catch (error) {
-     newAppState.timestamps = [];
-     localStorage.setItem('timestamps', '[]');
-   }
-   return newAppState;
- };
-
  onMount(() => {
-   appState = updateFromLocalStorage();
+   appState.timestamps = getFromLocalStorage(name);
+   appState.newTimestamp = null;
  });
 
 </script>
@@ -69,14 +96,17 @@
 <!-- ############################################################################### -->
 
 <style>
+
+  .component {
+    background: #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    width: 250px;
+  }
+
   .date-2 { width: 2em; }
 
   .date-4 { width: 4em; }
-
-  body * {
-    font-size: 20px;
-    font-family: sans-serif;
-  }
 
   button {
     padding: 0;
@@ -103,16 +133,25 @@
     width: 80px;
     height: 30px;
   }
- </style>
 
+  ul {
+    padding-left: 0;
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+ </style>
 
 
 <!-- ############################################################################### -->
 
-<h1>Timestamps</h1>
-{#if !appState.newTimestamp}
+<div class="component">
+  <h1>{name}</h1>
+  {#if !appState.newTimestamp}
   <button class="big" on:click={prepareNewTimestamp}>New</button>
-{:else}
+  {:else}
   <button class="big add" on:click={addTimestamp}>Add</button>
   <button class="big" on:click={cancelAddTimestamp}>Cancel</button>
   <div class="date-input">
@@ -120,16 +159,17 @@
     @
     <input class="date-2" bind:value={appState.newTimestamp.hours} inputmode="numeric"/>:<input class="date-2" bind:value={appState.newTimestamp.minutes} inputmode="numeric"/>
   </div>
-{/if}
+  {/if}
 
-{#if appState.timestamps.length }
+  {#if appState.timestamps.length }
   <ul>
     {#each appState.timestamps as t}
-      <li>{ formatTimestamp(t) }
-        <button class="small" on:click={() => deleteTimestamp(t)}>Delete</button>
-      </li>
+    <li>{ formatTimestamp(t) }
+      <button class="small" on:click={() => deleteTimestamp(t)}>Delete</button>
+    </li>
     {/each}
   </ul>
   <button class="small" on:click={copy}>Copy</button>
   <button class="small" on:click={reset}>Reset</button>
-{/if}
+  {/if}
+</div>

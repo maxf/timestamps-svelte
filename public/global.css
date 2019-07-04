@@ -60,3 +60,12 @@ button:active {
 button:focus {
 	border-color: #666;
 }
+
+.timestamp-manager {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.timestamp-manager + .timestamp-manager {
+  margin-left: 3px;
+}
