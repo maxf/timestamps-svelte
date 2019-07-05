@@ -11,13 +11,19 @@
  const formatTimestamp = d => `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`;
 
 
+  const isObject = a => (!!a) && (a.constructor === Object);
+
   const getSavedData = () => {
     const storedDataString = localStorage.getItem('timestamps');
     let parsedDataObject;
     try {
       parsedDataObject = JSON.parse(storedDataString);
     } catch (error) {
-      console.log('failed to parse localstorage json. Resetting');
+      console.log('failed to parse localstorage json.');
+      parsedDataObject = null;
+    }
+    if (!isObject(parsedDataObject)) {
+      console.log('localstorage is not an object. Resetting to {}');
       localStorage.setItem('timestamps', '{}');
       parsedDataObject = {};
     }
