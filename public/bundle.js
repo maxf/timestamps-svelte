@@ -1,2 +1,875 @@
-!function(){"use strict";function t(){}function e(t){return t()}function n(){return Object.create(null)}function a(t){t.forEach(e)}function s(t){return"function"==typeof t}function p(t,e){return t!=t?e==e:t!==e||t&&"object"==typeof t||"function"==typeof t}function i(t,e){t.appendChild(e)}function r(t,e,n){t.insertBefore(e,n||null)}function m(t){t.parentNode.removeChild(t)}function o(t){return document.createElement(t)}function u(t){return document.createTextNode(t)}function l(){return u(" ")}function c(t,e,n,a){return t.addEventListener(e,n,a),()=>t.removeEventListener(e,n,a)}function d(t,e,n){null==n?t.removeAttribute(e):t.setAttribute(e,n)}function f(t,e){e=""+e,t.data!==e&&(t.data=e)}let h;function g(t){h=t}function v(t){(function(){if(!h)throw new Error("Function called outside component initialization");return h})().$$.on_mount.push(t)}const S=[],$=[],y=[],w=[],T=Promise.resolve();let b=!1;function _(t){y.push(t)}function x(){const t=new Set;do{for(;S.length;){const t=S.shift();g(t),k(t.$$)}for(;$.length;)$.pop()();for(;y.length;){const e=y.pop();t.has(e)||(e(),t.add(e))}}while(S.length);for(;w.length;)w.pop()();b=!1}function k(t){t.fragment&&(t.update(t.dirty),a(t.before_render),t.fragment.p(t.dirty,t.ctx),t.dirty=null,t.after_render.forEach(_))}const C=new Set;function E(t,e){t.$$.dirty||(S.push(t),b||(b=!0,T.then(x)),t.$$.dirty=n()),t.$$.dirty[e]=!0}function N(p,i,r,m,o,u){const l=h;g(p);const c=i.props||{},d=p.$$={fragment:null,ctx:null,props:u,update:t,not_equal:o,bound:n(),on_mount:[],on_destroy:[],before_render:[],after_render:[],context:new Map(l?l.$$.context:[]),callbacks:n(),dirty:null};let f=!1;var v,S,$;d.ctx=r?r(p,c,(t,e)=>{d.ctx&&o(d.ctx[t],d.ctx[t]=e)&&(d.bound[t]&&d.bound[t](e),f&&E(p,t))}):c,d.update(),f=!0,a(d.before_render),d.fragment=m(d.ctx),i.target&&(i.hydrate?d.fragment.l(($=i.target,Array.from($.childNodes))):d.fragment.c(),i.intro&&((v=p.$$.fragment)&&v.i&&(C.delete(v),v.i(S))),function(t,n,p){const{fragment:i,on_mount:r,on_destroy:m,after_render:o}=t.$$;i.m(n,p),_(()=>{const n=r.map(e).filter(s);m?m.push(...n):a(n),t.$$.on_mount=[]}),o.forEach(_)}(p,i.target,i.anchor),x()),g(l)}class D{$destroy(){var e,n;n=1,(e=this).$$.fragment&&(a(e.$$.on_destroy),e.$$.fragment.d(n),e.$$.on_destroy=e.$$.fragment=null,e.$$.ctx={}),this.$destroy=t}$on(t,e){const n=this.$$.callbacks[t]||(this.$$.callbacks[t]=[]);return n.push(e),()=>{const t=n.indexOf(e);-1!==t&&n.splice(t,1)}}$set(){}}function A(t,e,n){const a=Object.create(t);return a.t=e[n],a}function I(t){var e,n,s,p,f,h,g,v,S,$,y,w,T;return{c(){(e=o("button")).textContent="Add",n=l(),(s=o("button")).textContent="Cancel",p=l(),f=o("div"),h=o("input"),g=u("/"),v=o("input"),S=u("\n    @\n    "),$=o("input"),y=u(":"),w=o("input"),d(e,"class","big add svelte-1lyumdb"),d(s,"class","big svelte-1lyumdb"),d(h,"class","date-2 svelte-1lyumdb"),d(h,"inputmode","numeric"),d(v,"class","date-2 svelte-1lyumdb"),d(v,"inputmode","numeric"),d($,"class","date-2 svelte-1lyumdb"),d($,"inputmode","numeric"),d(w,"class","date-2 svelte-1lyumdb"),d(w,"inputmode","numeric"),d(f,"class","date-input svelte-1lyumdb"),T=[c(e,"click",t.addTimestamp),c(s,"click",t.cancelAddTimestamp),c(h,"input",t.input0_input_handler),c(v,"input",t.input1_input_handler),c($,"input",t.input2_input_handler),c(w,"input",t.input3_input_handler)]},m(a,m){r(a,e,m),r(a,n,m),r(a,s,m),r(a,p,m),r(a,f,m),i(f,h),h.value=t.appState.newTimestamp.date,i(f,g),i(f,v),v.value=t.appState.newTimestamp.month,i(f,S),i(f,$),$.value=t.appState.newTimestamp.hours,i(f,y),i(f,w),w.value=t.appState.newTimestamp.minutes},p(t,e){t.appState&&h.value!==e.appState.newTimestamp.date&&(h.value=e.appState.newTimestamp.date),t.appState&&v.value!==e.appState.newTimestamp.month&&(v.value=e.appState.newTimestamp.month),t.appState&&$.value!==e.appState.newTimestamp.hours&&($.value=e.appState.newTimestamp.hours),t.appState&&w.value!==e.appState.newTimestamp.minutes&&(w.value=e.appState.newTimestamp.minutes)},d(t){t&&(m(e),m(n),m(s),m(p),m(f)),a(T)}}}function O(e){var n,a;return{c(){(n=o("button")).textContent="New",d(n,"class","big svelte-1lyumdb"),a=c(n,"click",e.prepareNewTimestamp)},m(t,e){r(t,n,e)},p:t,d(t){t&&m(n),a()}}}function j(t){for(var e,n,s,p,i,u,f=t.appState.timestamps,h=[],g=0;g<f.length;g+=1)h[g]=M(A(t,f,g));return{c(){e=o("ul");for(var a=0;a<h.length;a+=1)h[a].c();n=l(),(s=o("button")).textContent="Copy",p=l(),(i=o("button")).textContent="Reset",d(e,"class","svelte-1lyumdb"),d(s,"class","small svelte-1lyumdb"),d(i,"class","small svelte-1lyumdb"),u=[c(s,"click",t.copy),c(i,"click",t.reset)]},m(t,a){r(t,e,a);for(var m=0;m<h.length;m+=1)h[m].m(e,null);r(t,n,a),r(t,s,a),r(t,p,a),r(t,i,a)},p(t,n){if(t.formatTimestamp||t.appState){f=n.appState.timestamps;for(var a=0;a<f.length;a+=1){const s=A(n,f,a);h[a]?h[a].p(t,s):(h[a]=M(s),h[a].c(),h[a].m(e,null))}for(;a<h.length;a+=1)h[a].d(1);h.length=f.length}},d(t){t&&m(e),function(t,e){for(let n=0;n<t.length;n+=1)t[n]&&t[n].d(e)}(h,t),t&&(m(n),m(s),m(p),m(i)),a(u)}}}function M(t){var e,n,a,s,p,h,g=t.formatTimestamp(t.t);function v(){return t.click_handler(t)}return{c(){e=o("li"),n=u(g),a=l(),(s=o("button")).textContent="Delete",p=l(),d(s,"class","small svelte-1lyumdb"),d(e,"class","svelte-1lyumdb"),h=c(s,"click",v)},m(t,m){r(t,e,m),i(e,n),i(e,a),i(e,s),i(e,p)},p(e,a){t=a,e.appState&&g!==(g=t.formatTimestamp(t.t))&&f(n,g)},d(t){t&&m(e),h()}}}function B(e){var n,a,s,p,c;function h(t){return t.appState.newTimestamp?I:O}var g=h(e),v=g(e),S=e.appState.timestamps.length&&j(e);return{c(){n=o("div"),a=o("h1"),s=u(e.name),p=l(),v.c(),c=l(),S&&S.c(),d(n,"class","component svelte-1lyumdb")},m(t,e){r(t,n,e),i(n,a),i(a,s),i(n,p),v.m(n,null),i(n,c),S&&S.m(n,null)},p(t,e){t.name&&f(s,e.name),g===(g=h(e))&&v?v.p(t,e):(v.d(1),(v=g(e))&&(v.c(),v.m(n,c))),e.appState.timestamps.length?S?S.p(t,e):((S=j(e)).c(),S.m(n,null)):S&&(S.d(1),S=null)},i:t,o:t,d(t){t&&m(n),v.d(),S&&S.d()}}}function F(t,e,n){let{name:a}=e;const s={timestamps:[],newTimestamp:null},p=t=>`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours()}:${t.getMinutes()}`,i=()=>{const t=localStorage.getItem("timestamps");let e;try{e=JSON.parse(t)}catch(t){console.log("failed to parse localstorage json. Resetting"),localStorage.setItem("timestamps","{}"),e={}}return e},r=t=>{s.timestamps=s.timestamps.filter(e=>e!==t),n("appState",s)};return v(()=>{s.timestamps=(t=>{const e=i();return e[t]?e[t].map(t=>new Date(Date.parse(t))):[]})(a),n("appState",s),s.newTimestamp=null,n("appState",s)}),t.$set=(t=>{"name"in t&&n("name",a=t.name)}),{name:a,appState:s,formatTimestamp:p,prepareNewTimestamp:()=>{var t=new Date;s.newTimestamp={date:t.getDate(),month:t.getMonth(),year:t.getFullYear(),hours:t.getHours(),minutes:t.getMinutes()},n("appState",s)},addTimestamp:()=>{const t=s.newTimestamp;s.timestamps.push(new Date(t.year,t.month,t.date,t.hours,t.minutes)),((t,e)=>{const n=i();n[t]=e,localStorage.setItem("timestamps",JSON.stringify(n))})(a,s.timestamps),s.newTimestamp=null,n("appState",s)},deleteTimestamp:r,cancelAddTimestamp:()=>{const t=s.newTimestamp=null;return n("appState",s),t},reset:()=>{s.timestamps=[],n("appState",s),s.newTimestamp=null,n("appState",s),(t=>{const e=i();delete e[t],localStorage.setItem("timestamps",JSON.stringify(e))})(a)},copy:()=>{const t=s.timestamps.map(p).join();navigator.clipboard.writeText(t)},input0_input_handler:function(){s.newTimestamp.date=this.value,n("appState",s)},input1_input_handler:function(){s.newTimestamp.month=this.value,n("appState",s)},input2_input_handler:function(){s.newTimestamp.hours=this.value,n("appState",s)},input3_input_handler:function(){s.newTimestamp.minutes=this.value,n("appState",s)},click_handler:function({t:t}){return r(t)}}}class J extends D{constructor(t){super(),N(this,t,F,B,p,["name"])}}new J({target:document.getElementById("ts1"),props:{name:"TS1"}}),new J({target:document.getElementById("ts2"),props:{name:"TS2"}})}();
+
+(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
+(function () {
+    'use strict';
+
+    function noop() { }
+    function add_location(element, file, line, column, char) {
+        element.__svelte_meta = {
+            loc: { file, line, column, char }
+        };
+    }
+    function run(fn) {
+        return fn();
+    }
+    function blank_object() {
+        return Object.create(null);
+    }
+    function run_all(fns) {
+        fns.forEach(run);
+    }
+    function is_function(thing) {
+        return typeof thing === 'function';
+    }
+    function safe_not_equal(a, b) {
+        return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
+    }
+
+    function append(target, node) {
+        target.appendChild(node);
+    }
+    function insert(target, node, anchor) {
+        target.insertBefore(node, anchor || null);
+    }
+    function detach(node) {
+        node.parentNode.removeChild(node);
+    }
+    function destroy_each(iterations, detaching) {
+        for (let i = 0; i < iterations.length; i += 1) {
+            if (iterations[i])
+                iterations[i].d(detaching);
+        }
+    }
+    function element(name) {
+        return document.createElement(name);
+    }
+    function text(data) {
+        return document.createTextNode(data);
+    }
+    function space() {
+        return text(' ');
+    }
+    function listen(node, event, handler, options) {
+        node.addEventListener(event, handler, options);
+        return () => node.removeEventListener(event, handler, options);
+    }
+    function attr(node, attribute, value) {
+        if (value == null)
+            node.removeAttribute(attribute);
+        else
+            node.setAttribute(attribute, value);
+    }
+    function children(element) {
+        return Array.from(element.childNodes);
+    }
+    function set_data(text, data) {
+        data = '' + data;
+        if (text.data !== data)
+            text.data = data;
+    }
+
+    let current_component;
+    function set_current_component(component) {
+        current_component = component;
+    }
+    function get_current_component() {
+        if (!current_component)
+            throw new Error(`Function called outside component initialization`);
+        return current_component;
+    }
+    function onMount(fn) {
+        get_current_component().$$.on_mount.push(fn);
+    }
+
+    const dirty_components = [];
+    const binding_callbacks = [];
+    const render_callbacks = [];
+    const flush_callbacks = [];
+    const resolved_promise = Promise.resolve();
+    let update_scheduled = false;
+    function schedule_update() {
+        if (!update_scheduled) {
+            update_scheduled = true;
+            resolved_promise.then(flush);
+        }
+    }
+    function add_render_callback(fn) {
+        render_callbacks.push(fn);
+    }
+    function flush() {
+        const seen_callbacks = new Set();
+        do {
+            // first, call beforeUpdate functions
+            // and update components
+            while (dirty_components.length) {
+                const component = dirty_components.shift();
+                set_current_component(component);
+                update(component.$$);
+            }
+            while (binding_callbacks.length)
+                binding_callbacks.pop()();
+            // then, once components are updated, call
+            // afterUpdate functions. This may cause
+            // subsequent updates...
+            while (render_callbacks.length) {
+                const callback = render_callbacks.pop();
+                if (!seen_callbacks.has(callback)) {
+                    callback();
+                    // ...so guard against infinite loops
+                    seen_callbacks.add(callback);
+                }
+            }
+        } while (dirty_components.length);
+        while (flush_callbacks.length) {
+            flush_callbacks.pop()();
+        }
+        update_scheduled = false;
+    }
+    function update($$) {
+        if ($$.fragment) {
+            $$.update($$.dirty);
+            run_all($$.before_render);
+            $$.fragment.p($$.dirty, $$.ctx);
+            $$.dirty = null;
+            $$.after_render.forEach(add_render_callback);
+        }
+    }
+    const outroing = new Set();
+    function transition_in(block, local) {
+        if (block && block.i) {
+            outroing.delete(block);
+            block.i(local);
+        }
+    }
+
+    const globals = (typeof window !== 'undefined' ? window : global);
+    function mount_component(component, target, anchor) {
+        const { fragment, on_mount, on_destroy, after_render } = component.$$;
+        fragment.m(target, anchor);
+        // onMount happens after the initial afterUpdate. Because
+        // afterUpdate callbacks happen in reverse order (inner first)
+        // we schedule onMount callbacks before afterUpdate callbacks
+        add_render_callback(() => {
+            const new_on_destroy = on_mount.map(run).filter(is_function);
+            if (on_destroy) {
+                on_destroy.push(...new_on_destroy);
+            }
+            else {
+                // Edge case - component was destroyed immediately,
+                // most likely as a result of a binding initialising
+                run_all(new_on_destroy);
+            }
+            component.$$.on_mount = [];
+        });
+        after_render.forEach(add_render_callback);
+    }
+    function destroy_component(component, detaching) {
+        if (component.$$.fragment) {
+            run_all(component.$$.on_destroy);
+            component.$$.fragment.d(detaching);
+            // TODO null out other refs, including component.$$ (but need to
+            // preserve final state?)
+            component.$$.on_destroy = component.$$.fragment = null;
+            component.$$.ctx = {};
+        }
+    }
+    function make_dirty(component, key) {
+        if (!component.$$.dirty) {
+            dirty_components.push(component);
+            schedule_update();
+            component.$$.dirty = blank_object();
+        }
+        component.$$.dirty[key] = true;
+    }
+    function init(component, options, instance, create_fragment, not_equal$$1, prop_names) {
+        const parent_component = current_component;
+        set_current_component(component);
+        const props = options.props || {};
+        const $$ = component.$$ = {
+            fragment: null,
+            ctx: null,
+            // state
+            props: prop_names,
+            update: noop,
+            not_equal: not_equal$$1,
+            bound: blank_object(),
+            // lifecycle
+            on_mount: [],
+            on_destroy: [],
+            before_render: [],
+            after_render: [],
+            context: new Map(parent_component ? parent_component.$$.context : []),
+            // everything else
+            callbacks: blank_object(),
+            dirty: null
+        };
+        let ready = false;
+        $$.ctx = instance
+            ? instance(component, props, (key, value) => {
+                if ($$.ctx && not_equal$$1($$.ctx[key], $$.ctx[key] = value)) {
+                    if ($$.bound[key])
+                        $$.bound[key](value);
+                    if (ready)
+                        make_dirty(component, key);
+                }
+            })
+            : props;
+        $$.update();
+        ready = true;
+        run_all($$.before_render);
+        $$.fragment = create_fragment($$.ctx);
+        if (options.target) {
+            if (options.hydrate) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment.l(children(options.target));
+            }
+            else {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment.c();
+            }
+            if (options.intro)
+                transition_in(component.$$.fragment);
+            mount_component(component, options.target, options.anchor);
+            flush();
+        }
+        set_current_component(parent_component);
+    }
+    class SvelteComponent {
+        $destroy() {
+            destroy_component(this, 1);
+            this.$destroy = noop;
+        }
+        $on(type, callback) {
+            const callbacks = (this.$$.callbacks[type] || (this.$$.callbacks[type] = []));
+            callbacks.push(callback);
+            return () => {
+                const index = callbacks.indexOf(callback);
+                if (index !== -1)
+                    callbacks.splice(index, 1);
+            };
+        }
+        $set() {
+            // overridden by instance, if it has props
+        }
+    }
+    class SvelteComponentDev extends SvelteComponent {
+        constructor(options) {
+            if (!options || (!options.target && !options.$$inline)) {
+                throw new Error(`'target' is a required option`);
+            }
+            super();
+        }
+        $destroy() {
+            super.$destroy();
+            this.$destroy = () => {
+                console.warn(`Component was already destroyed`); // eslint-disable-line no-console
+            };
+        }
+    }
+
+    /* src/TimestampManager.svelte generated by Svelte v3.6.3 */
+    const { console: console_1 } = globals;
+
+    const file = "src/TimestampManager.svelte";
+
+    function get_each_context(ctx, list, i) {
+    	const child_ctx = Object.create(ctx);
+    	child_ctx.t = list[i];
+    	return child_ctx;
+    }
+
+    // (153:2) {:else}
+    function create_else_block(ctx) {
+    	var button0, t1, button1, t3, div, input0, t4, input1, t5, input2, t6, input3, dispose;
+
+    	return {
+    		c: function create() {
+    			button0 = element("button");
+    			button0.textContent = "Add";
+    			t1 = space();
+    			button1 = element("button");
+    			button1.textContent = "Cancel";
+    			t3 = space();
+    			div = element("div");
+    			input0 = element("input");
+    			t4 = text("/");
+    			input1 = element("input");
+    			t5 = text("\n    @\n    ");
+    			input2 = element("input");
+    			t6 = text(":");
+    			input3 = element("input");
+    			attr(button0, "class", "big add svelte-1lyumdb");
+    			add_location(button0, file, 153, 2, 3359);
+    			attr(button1, "class", "big svelte-1lyumdb");
+    			add_location(button1, file, 154, 2, 3422);
+    			attr(input0, "class", "date-2 svelte-1lyumdb");
+    			attr(input0, "inputmode", "numeric");
+    			add_location(input0, file, 156, 4, 3519);
+    			attr(input1, "class", "date-2 svelte-1lyumdb");
+    			attr(input1, "inputmode", "numeric");
+    			add_location(input1, file, 156, 88, 3603);
+    			attr(input2, "class", "date-2 svelte-1lyumdb");
+    			attr(input2, "inputmode", "numeric");
+    			add_location(input2, file, 158, 4, 3698);
+    			attr(input3, "class", "date-2 svelte-1lyumdb");
+    			attr(input3, "inputmode", "numeric");
+    			add_location(input3, file, 158, 89, 3783);
+    			attr(div, "class", "date-input svelte-1lyumdb");
+    			add_location(div, file, 155, 2, 3490);
+
+    			dispose = [
+    				listen(button0, "click", ctx.addTimestamp),
+    				listen(button1, "click", ctx.cancelAddTimestamp),
+    				listen(input0, "input", ctx.input0_input_handler),
+    				listen(input1, "input", ctx.input1_input_handler),
+    				listen(input2, "input", ctx.input2_input_handler),
+    				listen(input3, "input", ctx.input3_input_handler)
+    			];
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, button0, anchor);
+    			insert(target, t1, anchor);
+    			insert(target, button1, anchor);
+    			insert(target, t3, anchor);
+    			insert(target, div, anchor);
+    			append(div, input0);
+
+    			input0.value = ctx.appState.newTimestamp.date;
+
+    			append(div, t4);
+    			append(div, input1);
+
+    			input1.value = ctx.appState.newTimestamp.month;
+
+    			append(div, t5);
+    			append(div, input2);
+
+    			input2.value = ctx.appState.newTimestamp.hours;
+
+    			append(div, t6);
+    			append(div, input3);
+
+    			input3.value = ctx.appState.newTimestamp.minutes;
+    		},
+
+    		p: function update(changed, ctx) {
+    			if (changed.appState && (input0.value !== ctx.appState.newTimestamp.date)) input0.value = ctx.appState.newTimestamp.date;
+    			if (changed.appState && (input1.value !== ctx.appState.newTimestamp.month)) input1.value = ctx.appState.newTimestamp.month;
+    			if (changed.appState && (input2.value !== ctx.appState.newTimestamp.hours)) input2.value = ctx.appState.newTimestamp.hours;
+    			if (changed.appState && (input3.value !== ctx.appState.newTimestamp.minutes)) input3.value = ctx.appState.newTimestamp.minutes;
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(button0);
+    				detach(t1);
+    				detach(button1);
+    				detach(t3);
+    				detach(div);
+    			}
+
+    			run_all(dispose);
+    		}
+    	};
+    }
+
+    // (151:2) {#if !appState.newTimestamp}
+    function create_if_block_1(ctx) {
+    	var button, dispose;
+
+    	return {
+    		c: function create() {
+    			button = element("button");
+    			button.textContent = "New";
+    			attr(button, "class", "big svelte-1lyumdb");
+    			add_location(button, file, 151, 2, 3283);
+    			dispose = listen(button, "click", ctx.prepareNewTimestamp);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, button, anchor);
+    		},
+
+    		p: noop,
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(button);
+    			}
+
+    			dispose();
+    		}
+    	};
+    }
+
+    // (163:2) {#if appState.timestamps.length }
+    function create_if_block(ctx) {
+    	var ul, t0, button0, t2, button1, dispose;
+
+    	var each_value = ctx.appState.timestamps;
+
+    	var each_blocks = [];
+
+    	for (var i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    	}
+
+    	return {
+    		c: function create() {
+    			ul = element("ul");
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			t0 = space();
+    			button0 = element("button");
+    			button0.textContent = "Copy";
+    			t2 = space();
+    			button1 = element("button");
+    			button1.textContent = "Reset";
+    			attr(ul, "class", "svelte-1lyumdb");
+    			add_location(ul, file, 163, 2, 3926);
+    			attr(button0, "class", "small svelte-1lyumdb");
+    			add_location(button0, file, 170, 2, 4111);
+    			attr(button1, "class", "small svelte-1lyumdb");
+    			add_location(button1, file, 171, 2, 4165);
+
+    			dispose = [
+    				listen(button0, "click", ctx.copy),
+    				listen(button1, "click", ctx.reset)
+    			];
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, ul, anchor);
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(ul, null);
+    			}
+
+    			insert(target, t0, anchor);
+    			insert(target, button0, anchor);
+    			insert(target, t2, anchor);
+    			insert(target, button1, anchor);
+    		},
+
+    		p: function update(changed, ctx) {
+    			if (changed.formatTimestamp || changed.appState) {
+    				each_value = ctx.appState.timestamps;
+
+    				for (var i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(changed, child_ctx);
+    					} else {
+    						each_blocks[i] = create_each_block(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(ul, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+    				each_blocks.length = each_value.length;
+    			}
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(ul);
+    			}
+
+    			destroy_each(each_blocks, detaching);
+
+    			if (detaching) {
+    				detach(t0);
+    				detach(button0);
+    				detach(t2);
+    				detach(button1);
+    			}
+
+    			run_all(dispose);
+    		}
+    	};
+    }
+
+    // (165:4) {#each appState.timestamps as t}
+    function create_each_block(ctx) {
+    	var li, t0_value = ctx.formatTimestamp(ctx.t), t0, t1, button, t3, dispose;
+
+    	function click_handler() {
+    		return ctx.click_handler(ctx);
+    	}
+
+    	return {
+    		c: function create() {
+    			li = element("li");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			button = element("button");
+    			button.textContent = "Delete";
+    			t3 = space();
+    			attr(button, "class", "small svelte-1lyumdb");
+    			add_location(button, file, 166, 6, 4005);
+    			attr(li, "class", "svelte-1lyumdb");
+    			add_location(li, file, 165, 4, 3972);
+    			dispose = listen(button, "click", click_handler);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, li, anchor);
+    			append(li, t0);
+    			append(li, t1);
+    			append(li, button);
+    			append(li, t3);
+    		},
+
+    		p: function update(changed, new_ctx) {
+    			ctx = new_ctx;
+    			if ((changed.appState) && t0_value !== (t0_value = ctx.formatTimestamp(ctx.t))) {
+    				set_data(t0, t0_value);
+    			}
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(li);
+    			}
+
+    			dispose();
+    		}
+    	};
+    }
+
+    function create_fragment(ctx) {
+    	var div, h1, t0, t1, t2;
+
+    	function select_block_type(ctx) {
+    		if (!ctx.appState.newTimestamp) return create_if_block_1;
+    		return create_else_block;
+    	}
+
+    	var current_block_type = select_block_type(ctx);
+    	var if_block0 = current_block_type(ctx);
+
+    	var if_block1 = (ctx.appState.timestamps.length) && create_if_block(ctx);
+
+    	return {
+    		c: function create() {
+    			div = element("div");
+    			h1 = element("h1");
+    			t0 = text(ctx.name);
+    			t1 = space();
+    			if_block0.c();
+    			t2 = space();
+    			if (if_block1) if_block1.c();
+    			add_location(h1, file, 149, 2, 3234);
+    			attr(div, "class", "component svelte-1lyumdb");
+    			add_location(div, file, 148, 0, 3208);
+    		},
+
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, div, anchor);
+    			append(div, h1);
+    			append(h1, t0);
+    			append(div, t1);
+    			if_block0.m(div, null);
+    			append(div, t2);
+    			if (if_block1) if_block1.m(div, null);
+    		},
+
+    		p: function update(changed, ctx) {
+    			if (changed.name) {
+    				set_data(t0, ctx.name);
+    			}
+
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
+    				if_block0.p(changed, ctx);
+    			} else {
+    				if_block0.d(1);
+    				if_block0 = current_block_type(ctx);
+    				if (if_block0) {
+    					if_block0.c();
+    					if_block0.m(div, t2);
+    				}
+    			}
+
+    			if (ctx.appState.timestamps.length) {
+    				if (if_block1) {
+    					if_block1.p(changed, ctx);
+    				} else {
+    					if_block1 = create_if_block(ctx);
+    					if_block1.c();
+    					if_block1.m(div, null);
+    				}
+    			} else if (if_block1) {
+    				if_block1.d(1);
+    				if_block1 = null;
+    			}
+    		},
+
+    		i: noop,
+    		o: noop,
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(div);
+    			}
+
+    			if_block0.d();
+    			if (if_block1) if_block1.d();
+    		}
+    	};
+    }
+
+    function instance($$self, $$props, $$invalidate) {
+    	let { name } = $$props;
+
+     const appState = {
+       timestamps: [], // array of Date
+       newTimestamp: null // null or { date, month, year, hours, minutes }
+     };
+
+     const formatTimestamp = d => `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`;
+
+
+      const getSavedData = () => {
+        const storedDataString = localStorage.getItem('timestamps');
+        let parsedDataObject;
+        try {
+          parsedDataObject = JSON.parse(storedDataString);
+        } catch (error) {
+          console.log('failed to parse localstorage json. Resetting');
+          localStorage.setItem('timestamps', '{}');
+          parsedDataObject = {};
+        }
+        return parsedDataObject;
+      };
+
+     const getFromLocalStorage = name => {
+       const localData = getSavedData();
+       if (localData[name]) {
+         return localData[name].map(isoDate => new Date(Date.parse(isoDate)));
+       } else {
+         return [];
+       }
+     };
+
+     const saveToLocalStorage = (name, timestamps) => {
+       const localData = getSavedData();
+       localData[name] = timestamps;
+       localStorage.setItem('timestamps', JSON.stringify(localData));
+     };
+
+     const deleteFromLocalStorage = name => {
+       const localData = getSavedData();
+       delete localData[name];
+       localStorage.setItem('timestamps', JSON.stringify(localData));
+     };
+
+     const prepareNewTimestamp = () => {
+       var now = new Date();
+       appState.newTimestamp = {
+         date: now.getDate(),
+         month: now.getMonth(),
+         year: now.getFullYear(),
+         hours: now.getHours(),
+         minutes: now.getMinutes(),
+       }; $$invalidate('appState', appState);
+     };
+
+     const addTimestamp = () => {
+       const d = appState.newTimestamp;
+       appState.timestamps.push(new Date(d.year, d.month, d.date, d.hours, d.minutes));
+       saveToLocalStorage(name, appState.timestamps);
+       appState.newTimestamp = null; $$invalidate('appState', appState);
+     };
+
+     const deleteTimestamp = (timestampToRemove) => {
+       appState.timestamps =
+         appState.timestamps.filter(t => t !== timestampToRemove); $$invalidate('appState', appState);
+     };
+
+     const cancelAddTimestamp = () => { const $$result = appState.newTimestamp = null; $$invalidate('appState', appState); return $$result; };
+
+     const reset = () => {
+       appState.timestamps = []; $$invalidate('appState', appState);
+       appState.newTimestamp = null; $$invalidate('appState', appState);
+       deleteFromLocalStorage(name);
+     };
+
+     // copy the timestamps to the clipboard
+     const copy = () => {
+       const copyText = appState.timestamps
+         .map(formatTimestamp)
+         .join();
+       navigator.clipboard.writeText(copyText);
+     };
+
+     onMount(() => {
+       appState.timestamps = getFromLocalStorage(name); $$invalidate('appState', appState);
+       appState.newTimestamp = null; $$invalidate('appState', appState);
+     });
+
+    	const writable_props = ['name'];
+    	Object.keys($$props).forEach(key => {
+    		if (!writable_props.includes(key) && !key.startsWith('$$')) console_1.warn(`<TimestampManager> was created with unknown prop '${key}'`);
+    	});
+
+    	function input0_input_handler() {
+    		appState.newTimestamp.date = this.value;
+    		$$invalidate('appState', appState);
+    	}
+
+    	function input1_input_handler() {
+    		appState.newTimestamp.month = this.value;
+    		$$invalidate('appState', appState);
+    	}
+
+    	function input2_input_handler() {
+    		appState.newTimestamp.hours = this.value;
+    		$$invalidate('appState', appState);
+    	}
+
+    	function input3_input_handler() {
+    		appState.newTimestamp.minutes = this.value;
+    		$$invalidate('appState', appState);
+    	}
+
+    	function click_handler({ t }) {
+    		return deleteTimestamp(t);
+    	}
+
+    	$$self.$set = $$props => {
+    		if ('name' in $$props) $$invalidate('name', name = $$props.name);
+    	};
+
+    	return {
+    		name,
+    		appState,
+    		formatTimestamp,
+    		prepareNewTimestamp,
+    		addTimestamp,
+    		deleteTimestamp,
+    		cancelAddTimestamp,
+    		reset,
+    		copy,
+    		input0_input_handler,
+    		input1_input_handler,
+    		input2_input_handler,
+    		input3_input_handler,
+    		click_handler
+    	};
+    }
+
+    class TimestampManager extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance, create_fragment, safe_not_equal, ["name"]);
+
+    		const { ctx } = this.$$;
+    		const props = options.props || {};
+    		if (ctx.name === undefined && !('name' in props)) {
+    			console_1.warn("<TimestampManager> was created without expected prop 'name'");
+    		}
+    	}
+
+    	get name() {
+    		throw new Error("<TimestampManager>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set name(value) {
+    		throw new Error("<TimestampManager>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/LocalStorage.svelte generated by Svelte v3.6.3 */
+
+    const file$1 = "src/LocalStorage.svelte";
+
+    function create_fragment$1(ctx) {
+    	var div, t;
+
+    	return {
+    		c: function create() {
+    			div = element("div");
+    			t = text(ctx.model);
+    			attr(div, "id", "main");
+    			attr(div, "class", "svelte-1n78hvn");
+    			add_location(div, file$1, 22, 0, 316);
+    		},
+
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, div, anchor);
+    			append(div, t);
+    		},
+
+    		p: function update(changed, ctx) {
+    			if (changed.model) {
+    				set_data(t, ctx.model);
+    			}
+    		},
+
+    		i: noop,
+    		o: noop,
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(div);
+    			}
+    		}
+    	};
+    }
+
+    function instance$1($$self, $$props, $$invalidate) {
+    	let model = window.localStorage.getItem('timestamps');
+
+      onMount(() => {
+        setInterval(
+          () => { $$invalidate('model', model = window.localStorage.getItem('timestamps')); },
+          3000
+        );
+      });
+
+    	return { model };
+    }
+
+    class LocalStorage extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, []);
+    	}
+    }
+
+    const ts1 = new TimestampManager({
+      target: document.getElementById('ts1'),
+      props: {
+        name: 'TS1'
+      }
+    });
+
+    const ts2 = new TimestampManager({
+      target: document.getElementById('ts2'),
+      props: {
+        name: 'TS2'
+      }
+    });
+
+    const ls = new LocalStorage({
+      target: document.getElementById('ls')
+    });
+
+}());
 //# sourceMappingURL=bundle.js.map

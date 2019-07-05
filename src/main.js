@@ -1,4 +1,5 @@
 import TimestampManager from './TimestampManager.svelte';
+import LocalStorage from './LocalStorage.svelte';
 
 const ts1 = new TimestampManager({
   target: document.getElementById('ts1'),
@@ -14,5 +15,6 @@ const ts2 = new TimestampManager({
   }
 });
 
-//export default ts1;
-//export default ts2;
+const ls = new LocalStorage({
+  target: document.getElementById('ls')
+});
