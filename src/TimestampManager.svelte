@@ -11,40 +11,38 @@
  const formatTimestamp = d => `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`;
 
 
+  const getSavedData = () => {
+    const storedDataString = localStorage.getItem('timestamps');
+    let parsedDataObject;
+    try {
+      parsedDataObject = JSON.parse(storedDataString);
+    } catch (error) {
+      console.log('failed to parse localstorage json. Resetting');
+      localStorage.setItem('timestamps', '{}');
+      parsedDataObject = {};
+    }
+    return parsedDataObject;
+  }
+
  const getFromLocalStorage = name => {
-   const storedData = localStorage.getItem('timestamps');
-   try {
-     const data = JSON.parse(storedData)[name];
-     return data.map(isoDate => new Date(Date.parse(isoDate)));
-   } catch (error) {
-     console.log('failed to parse localstorage data 1', error);
+   const localData = getSavedData();
+   if (localData[name]) {
+     return localData[name].map(isoDate => new Date(Date.parse(isoDate)));
+   } else {
      return [];
    }
  };
 
  const saveToLocalStorage = (name, timestamps) => {
-   const storedData = localStorage.getItem('timestamps') || '{}';
-   let data;
-   try {
-     data = JSON.parse(storedData);
-   } catch (error) {
-     console.log('failed to parse localstorage data 2', error);
-     data = {};
-   }
-   data[name] = timestamps;
-   localStorage.setItem('timestamps', JSON.stringify(data));
+   const localData = getSavedData();
+   localData[name] = timestamps;
+   localStorage.setItem('timestamps', JSON.stringify(localData));
  };
 
  const deleteFromLocalStorage = name => {
-   const storedData = localStorage.getItem('timestamps');
-   try {
-     const data = JSON.parse(storedData);
-     delete data[name];
-     localStorage.setItem('timestamps', JSON.stringify(data));
-   } catch (error) {
-     console.log('failed to parse localstorage data 3', error);
-     localStorage.removeItem('timestamps');
-   }
+   const localData = getSavedData();
+   delete localData[name];
+   localStorage.setItem('timestamps', JSON.stringify(localData));
  };
 
  const prepareNewTimestamp = () => {
