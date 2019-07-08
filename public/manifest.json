@@ -1,0 +1,21 @@
+{
+  "short_name": "Timestamps",
+  "name": "Timestamps",
+  "icons": [
+    {
+      "src": "clock-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "clock-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/timestamps-svelte/public",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/timestamps-svelte/public",
+  "theme_color": "#3367D6"
+}
