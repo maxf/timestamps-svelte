@@ -106,8 +106,9 @@
 <style>
 
   .component {
-    background: #ddd;
     border: 1px solid #64f;
+    margin: 3px;
+    background: white;
     border-radius: 10px;
     padding: 10px;
     width: 206px;
@@ -151,13 +152,18 @@
     list-style-type: none;
   }
 
+  h1 {
+    font-size: 30px;
+    margin: 0 0 10px 0;
+  }
+
  </style>
 
 
 <!-- ############################################################################### -->
 
 <div class="component">
-  <h1>{name}</h1>
+  <h1><img src="clock-icon-192.png" alt="clock icon" height="20px"/> {name}</h1>
   {#if !appState.newTimestamp}
   <button class="big" on:click={prepareNewTimestamp}>New</button>
   {:else}
