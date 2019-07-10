@@ -126,6 +126,10 @@
     color: white;
   }
 
+  button:active {
+    background: #118;
+  }
+
   .date-input {
     margin-top: 1em;
   }
