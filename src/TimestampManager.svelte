@@ -12,9 +12,11 @@
 
 
 
-  const formatTimestamp = d => `
-    ${d.getDate()}/${d.getMonth() + 1}/${pad(d.getFullYear(),4)} -
-    ${d.getHours()}:${pad(d.getMinutes(),2)}`;
+  const formatTimestamp = d =>
+    `${d.getDate()}/${d.getMonth() + 1}/${pad(d.getFullYear(),4)}`
+    + ', '
+    + `${d.getHours()}:${pad(d.getMinutes(),2)}`
+    + '\n';
 
 
   const isObject = a => (!!a) && (a.constructor === Object);
@@ -90,7 +92,7 @@
  const copy = () => {
    const copyText = appState.timestamps
      .map(formatTimestamp)
-     .join();
+     .join('');
    navigator.clipboard.writeText(copyText);
  };
 
