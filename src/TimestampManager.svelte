@@ -5,7 +5,7 @@
 
   const appState = {
     timestamps: [], // array of Date
-    newTimestamp: null // null or { date, month, year, hours, minutes }
+    newTimestamp: null // null or { date, month1, year, hours, minutes }
   };
 
   const pad = (n, d) => n.toString().padStart(d, '0');
@@ -59,7 +59,7 @@
     var now = new Date();
     appState.newTimestamp = {
       date: now.getDate(),
-      month: now.getMonth(),
+      month1: now.getMonth() + 1,
       year: now.getFullYear(),
       hours: now.getHours(),
       minutes: now.getMinutes(),
@@ -68,7 +68,7 @@
 
  const addTimestamp = () => {
    const d = appState.newTimestamp;
-   appState.timestamps.push(new Date(d.year, d.month, d.date, d.hours, d.minutes));
+   appState.timestamps.push(new Date(d.year, d.month1 - 1, d.date, d.hours, d.minutes));
    saveToLocalStorage(name, appState.timestamps.sort((a, b) => a-b));
    appState.newTimestamp = null;
  };
@@ -181,7 +181,7 @@
   <button class="big add" on:click={addTimestamp}>Add</button>
   <button class="big" on:click={cancelAddTimestamp}>Cancel</button>
   <div class="date-input">
-    <input class="date-2" bind:value={appState.newTimestamp.date} inputmode="numeric"/>/<input class="date-2" bind:value={appState.newTimestamp.month} inputmode="numeric"/>
+    <input class="date-2" bind:value={appState.newTimestamp.date} inputmode="numeric"/>/<input class="date-2" bind:value={appState.newTimestamp.month1} inputmode="numeric"/>
     @
     <input class="date-2" bind:value={appState.newTimestamp.hours} inputmode="numeric"/>:<input class="date-2" bind:value={appState.newTimestamp.minutes} inputmode="numeric"/>
   </div>
