@@ -1,0 +1,10 @@
+name: timestamps-svelte
+root: ~/dev/timestamps-svelte
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - emacs -nw .
+        - npm run dev
+        -
