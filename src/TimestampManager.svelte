@@ -148,6 +148,13 @@
     height: 30px;
   }
 
+  button.del {
+    font-weight: bold;
+    margin-left: .5em;
+    background: #ddd;
+    padding: 3px;
+  }
+
   ul {
     padding-left: 0;
   }
@@ -184,7 +191,7 @@
   <ul>
     {#each appState.timestamps as t}
     <li>{ formatTimestamp(t) }
-      <button class="small" on:click={() => deleteTimestamp(t)}>Delete</button>
+      <button class="del" on:click={() => deleteTimestamp(t)}>❌</button>
     </li>
     {/each}
   </ul>
