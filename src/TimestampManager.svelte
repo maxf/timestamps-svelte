@@ -69,7 +69,7 @@
  const addTimestamp = () => {
    const d = appState.newTimestamp;
    appState.timestamps.push(new Date(d.year, d.month, d.date, d.hours, d.minutes));
-   saveToLocalStorage(name, appState.timestamps);
+   saveToLocalStorage(name, appState.timestamps.sort((a, b) => a-b));
    appState.newTimestamp = null;
  };
 
