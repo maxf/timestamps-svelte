@@ -191,7 +191,7 @@
 
   {#if appState.timestamps.length }
   <ul>
-    {#each appState.timestamps as t}
+    {#each appState.timestamps.sort((a,b) => b - a) as t}
     <li>{ formatTimestamp(t) }
       <button class="del" on:click={() => deleteTimestamp(t)}>❌</button>
     </li>
