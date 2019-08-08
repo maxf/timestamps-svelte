@@ -1,78 +1,84 @@
 <script>
-  import { onMount } from 'svelte';
+ import { onMount } from 'svelte';
 
-  export let name;
+ export let name;
 
-  const appState = {
-    timestamps: [], // array of Date
-    newTimestamp: null // null or { date, month1, year, hours, minutes }
-  };
+ const appState = {
+   timestamps: [], // array of Date
+   newTimestamp: null // null or { date, month1, year, hours, minutes }
+ };
 
-  const pad = (n, d) => n.toString().padStart(d, '0');
-
-
-
-  const formatTimestamp = d =>
-    `${d.getDate()}/${d.getMonth() + 1}/${pad(d.getFullYear(),4)}`
-    + ', '
-    + `${d.getHours()}:${pad(d.getMinutes(),2)}`
-    + '\n';
+ const pad = (n, d) => n.toString().padStart(d, '0');
 
 
-  const isObject = a => (!!a) && (a.constructor === Object);
 
-  const getSavedData = () => {
-    const storedDataString = localStorage.getItem('timestamps');
-    let parsedDataObject;
-    try {
-      parsedDataObject = JSON.parse(storedDataString);
-    } catch (error) {
-      console.log('failed to parse localstorage json.');
-      parsedDataObject = null;
-    }
-    if (!isObject(parsedDataObject)) {
-      console.log('localstorage is not an object. Resetting to {}');
-      localStorage.setItem('timestamps', '{}');
-      parsedDataObject = {};
-    }
-    return parsedDataObject;
-  }
+ const formatTimestamp = d =>
+   `${d.getDate()}/${d.getMonth() + 1}/${pad(d.getFullYear(),4)}`
+                          + ', '
+                          + `${d.getHours()}:${pad(d.getMinutes(),2)}`
+                          + '\n';
 
-  const getFromLocalStorage = name => {
-    const localData = getSavedData();
-    return localData[name] ?
-      localData[name].map(isoDate => new Date(Date.parse(isoDate)))
-      : [];
-  };
 
-  const saveToLocalStorage = (name, timestamps) => {
-    const localData = getSavedData();
-    localData[name] = timestamps;
-    localStorage.setItem('timestamps', JSON.stringify(localData));
-  };
+ const isObject = a => (!!a) && (a.constructor === Object);
 
-  const deleteFromLocalStorage = name => {
-    const localData = getSavedData();
-    delete localData[name];
-    localStorage.setItem('timestamps', JSON.stringify(localData));
-  };
+ const getSavedData = () => {
+   const storedDataString = localStorage.getItem('timestamps');
+   let parsedDataObject;
+   try {
+     parsedDataObject = JSON.parse(storedDataString);
+   } catch (error) {
+     console.log('failed to parse localstorage json.');
+     parsedDataObject = null;
+   }
+   if (!isObject(parsedDataObject)) {
+     console.log('localstorage is not an object. Resetting to {}');
+     localStorage.setItem('timestamps', '{}');
+     parsedDataObject = {};
+   }
+   return parsedDataObject;
+ }
 
-  const prepareNewTimestamp = () => {
-    var now = new Date();
-    appState.newTimestamp = {
-      date: now.getDate(),
-      month1: now.getMonth() + 1,
-      year: now.getFullYear(),
-      hours: now.getHours(),
-      minutes: now.getMinutes(),
-    }
-  };
+ const getFromLocalStorage = name => {
+   const localData = getSavedData();
+   return localData[name] ?
+          localData[name].map(isoDate => new Date(Date.parse(isoDate)))
+        : [];
+ };
+
+ const saveToLocalStorage = (name, timestamps) => {
+   const localData = getSavedData();
+   localData[name] = timestamps;
+   localStorage.setItem('timestamps', JSON.stringify(localData));
+ };
+
+ const deleteFromLocalStorage = name => {
+   const localData = getSavedData();
+   delete localData[name];
+   localStorage.setItem('timestamps', JSON.stringify(localData));
+ };
+
+ const prepareNewTimestamp = () => {
+   var now = new Date();
+   appState.newTimestamp = {
+     date: now.getDate(),
+     month1: now.getMonth() + 1,
+     year: now.getFullYear(),
+     hours: now.getHours(),
+     minutes: now.getMinutes(),
+   }
+ };
+
+ const isValidDate = d => d instanceof Date && !isNaN(d);
+
 
  const addTimestamp = () => {
    const d = appState.newTimestamp;
-   appState.timestamps.push(new Date(d.year, d.month1 - 1, d.date, d.hours, d.minutes));
-   saveToLocalStorage(name, appState.timestamps.sort((a, b) => a-b));
-   appState.newTimestamp = null;
+   const newDate = new Date(d.year, d.month1 - 1, d.date, d.hours, d.minutes);
+   if (isValidDate(newDate)) {
+     appState.timestamps.push(newDate);
+     saveToLocalStorage(name, appState.timestamps.sort((a, b) => a-b));
+     appState.newTimestamp = null;
+   }
  };
 
  const deleteTimestamp = (timestampToRemove) => {
@@ -91,8 +97,8 @@
  // copy the timestamps to the clipboard
  const copy = () => {
    const copyText = appState.timestamps
-     .map(formatTimestamp)
-     .join('');
+                            .map(formatTimestamp)
+                            .join('');
    navigator.clipboard.writeText(copyText);
  };
 
