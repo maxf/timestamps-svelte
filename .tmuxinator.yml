@@ -5,6 +5,5 @@ windows:
   - main:
       layout: main-vertical
       panes:
-        - emacs -nw .
         - npm run dev
         -
