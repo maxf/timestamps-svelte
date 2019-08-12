@@ -5,19 +5,17 @@
 
  const appState = {
    timestamps: [], // array of Date
-   newTimestamp: null // null or { date, month1, year, hours, minutes }
+   newTimestamp: null, // null or { date, month1, year, hours, minutes }
+   errorMessage: null
  };
 
  const pad = (n, d) => n.toString().padStart(d, '0');
-
-
 
  const formatTimestamp = d =>
    `${d.getDate()}/${d.getMonth() + 1}/${pad(d.getFullYear(),4)}`
                           + ', '
                           + `${d.getHours()}:${pad(d.getMinutes(),2)}`
                           + '\n';
-
 
  const isObject = a => (!!a) && (a.constructor === Object);
 
@@ -64,20 +62,22 @@
      month1: now.getMonth() + 1,
      year: now.getFullYear(),
      hours: now.getHours(),
-     minutes: now.getMinutes(),
+     minutes: now.getMinutes()
    }
  };
 
  const isValidDate = d => d instanceof Date && !isNaN(d);
 
-
  const addTimestamp = () => {
    const d = appState.newTimestamp;
    const newDate = new Date(d.year, d.month1 - 1, d.date, d.hours, d.minutes);
    if (isValidDate(newDate)) {
+     appState.errorMessage = null;
      appState.timestamps.push(newDate);
      saveToLocalStorage(name, appState.timestamps.sort((a, b) => a-b));
      appState.newTimestamp = null;
+   } else {
+     appState.errorMessage = "Bad timestamp";
    }
  };
 
@@ -176,6 +176,16 @@
     margin: 0 0 10px 0;
   }
 
+  .error-message {
+    color: red;
+    padding-top: 1em;
+  }
+
+  .ts-list {
+    height: 5em;
+    overflow-y: auto;
+  }
+
  </style>
 
 
@@ -188,6 +198,9 @@
   {:else}
   <button class="big add" on:click={addTimestamp}>Add</button>
   <button class="big" on:click={cancelAddTimestamp}>Cancel</button>
+  {#if appState.errorMessage}
+  <div class="error-message">{appState.errorMessage}</div>
+  {/if}
   <div class="date-input">
     <input class="date-2" bind:value={appState.newTimestamp.date} inputmode="numeric"/>/<input class="date-2" bind:value={appState.newTimestamp.month1} inputmode="numeric"/>
     @
@@ -196,7 +209,7 @@
   {/if}
 
   {#if appState.timestamps.length }
-  <ul>
+  <ul class="ts-list">
     {#each appState.timestamps.sort((a,b) => b - a) as t}
     <li>{ formatTimestamp(t) }
       <button class="del" on:click={() => deleteTimestamp(t)}>❌</button>
