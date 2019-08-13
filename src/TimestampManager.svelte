@@ -102,10 +102,31 @@
    navigator.clipboard.writeText(copyText);
  };
 
+ // chart functions
+ const dayOfTimestamp = t => Math.floor(t / (1000 * 3600 * 24));
+ const timeOfTimestamp = t => t - dayOfTimestamp(t)*1000*3600*24;
+
+ const chartViewBox = (timestamps) => {
+   const minTs = Math.min.apply(this, timestamps);
+   const maxTs = Math.max.apply(this, timestamps);
+   const xmin = dayOfTimestamp(minTs);
+   const xmax = dayOfTimestamp(maxTs);
+   const ymin = 0;
+   const ymax = 24 * 3600;
+   return `${xmin} ${ymin} ${xmax-xmin+1} ${ymax-ymin}`;
+ };
+
+
+
+ // start
  onMount(() => {
    appState.timestamps = getFromLocalStorage(name);
    appState.newTimestamp = null;
  });
+
+
+
+
 
 </script>
 
@@ -113,80 +134,84 @@
 
 <style>
 
-  .component {
-    border: 1px solid #64f;
-    margin: 3px;
-    background: white;
-    border-radius: 10px;
-    padding: 10px;
-    width: 206px;
-  }
+ .component {
+   border: 1px solid #64f;
+   margin: 3px;
+   background: white;
+   border-radius: 10px;
+   padding: 10px;
+   width: 206px;
+ }
 
-  .date-2 { width: 2em; }
+ .date-2 { width: 2em; }
 
-  .date-4 { width: 4em; }
+ .date-4 { width: 4em; }
 
-  button {
-    padding: 0;
-    border: 1px solid white;
-    border-radius: 10px;
-    background: #32f;
-    color: white;
-  }
+ button {
+   padding: 0;
+   border: 1px solid white;
+   border-radius: 10px;
+   background: #32f;
+   color: white;
+ }
 
-  button:active {
-    background: #118;
-  }
+ button:active {
+   background: #118;
+ }
 
-  .date-input {
-    margin-top: 1em;
-  }
+ .date-input {
+   margin-top: 1em;
+ }
 
-  button.add {
-    background: #e55;
-  }
+ button.add {
+   background: #e55;
+ }
 
-  button.big {
-    width: 100px;
-    height: 100px;
-  }
+ button.big {
+   width: 100px;
+   height: 100px;
+ }
 
-  button.small {
-    width: 80px;
-    height: 30px;
-  }
+ button.small {
+   width: 80px;
+   height: 30px;
+ }
 
-  button.del {
-    font-weight: bold;
-    margin-left: .5em;
-    background: #ddd;
-    padding: 3px;
-  }
+ button.del {
+   font-weight: bold;
+   margin-left: .5em;
+   background: #ddd;
+   padding: 3px;
+ }
 
-  ul {
-    padding-left: 0;
-  }
+ ul {
+   padding-left: 0;
+ }
 
-  li {
-    list-style-type: none;
-  }
+ li {
+   list-style-type: none;
+ }
 
-  h1 {
-    font-size: 30px;
-    margin: 0 0 10px 0;
-  }
+ h1 {
+   font-size: 30px;
+   margin: 0 0 10px 0;
+ }
 
-  .error-message {
-    color: red;
-    padding-top: 1em;
-  }
+ .error-message {
+   color: red;
+   padding-top: 1em;
+ }
 
-  .ts-list {
-    height: 5em;
-    overflow-y: auto;
-  }
+ .ts-list {
+   height: 5em;
+   overflow-y: auto;
+ }
 
- </style>
+ svg {
+   border: 1px solid black
+ }
+
+</style>
 
 
 <!-- ############################################################################### -->
@@ -218,5 +243,15 @@
   </ul>
   <button class="small" on:click={copy}>Copy</button>
   <button class="small" on:click={reset}>Reset</button>
+
+  <svg viewBox="{ chartViewBox(appState.timestamps) }" preserveAspectRatio="none" width="100%" height="200px">
+    <rect x="18120" y="0" width="5" height="86400" fill="#ddd"/>
+    {#each appState.timestamps as t}
+    <rect x="{dayOfTimestamp(t)}" y="{timeOfTimestamp(t)/1000}" width="1" height="1000" fill="red"/>
+    {/each}
+  </svg>
+
+
+
   {/if}
 </div>
