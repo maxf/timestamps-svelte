@@ -208,7 +208,8 @@
  }
 
  svg {
-   border: 1px solid black
+   border: 1px solid black;
+   background: #ddd;
  }
 
 </style>
@@ -245,7 +246,6 @@
   <button class="small" on:click={reset}>Reset</button>
 
   <svg viewBox="{ chartViewBox(appState.timestamps) }" preserveAspectRatio="none" width="100%" height="200px">
-    <rect x="18120" y="0" width="5" height="86400" fill="#ddd"/>
     {#each appState.timestamps as t}
     <rect x="{dayOfTimestamp(t)}" y="{timeOfTimestamp(t)/1000}" width="1" height="1000" fill="red"/>
     {/each}
