@@ -6,8 +6,16 @@
  const appState = {
    timestamps: [], // array of Date
    newTimestamp: null, // null or { date, month1, year, hours, minutes }
-   errorMessage: null
+   message: {level:0, text:null}, // error level and message text
+   importVisible: false,
+   dataToImport: null // null or JSON string to convert to timestamps
  };
+
+ const showMessage = (text, level) =>
+   appState.message = {level:level||0, text};
+
+ const clearMessage = () =>
+   appState.message = {level:0, text: null};
 
  const pad = (n, d) => n.toString().padStart(d, '0');
 
@@ -25,11 +33,11 @@
    try {
      parsedDataObject = JSON.parse(storedDataString);
    } catch (error) {
-     console.log('failed to parse localstorage json.');
+     showMessage('failed to parse localstorage json.', 1);
      parsedDataObject = null;
    }
    if (!isObject(parsedDataObject)) {
-     console.log('localstorage is not an object. Resetting to {}');
+     showMessage('Failed to get data from localstorage');
      localStorage.setItem('timestamps', '{}');
      parsedDataObject = {};
    }
@@ -56,6 +64,7 @@
  };
 
  const prepareNewTimestamp = () => {
+   clearMessage();
    var now = new Date();
    appState.newTimestamp = {
      date: now.getDate(),
@@ -72,12 +81,12 @@
    const d = appState.newTimestamp;
    const newDate = new Date(d.year, d.month1 - 1, d.date, d.hours, d.minutes);
    if (isValidDate(newDate)) {
-     appState.errorMessage = null;
      appState.timestamps.push(newDate);
      saveToLocalStorage(name, appState.timestamps.sort((a, b) => a-b));
      appState.newTimestamp = null;
+     showMessage('timestamp added');
    } else {
-     appState.errorMessage = "Bad timestamp";
+     showMessage('error adding timestamp',1);
    }
  };
 
@@ -86,12 +95,41 @@
      appState.timestamps.filter(t => t !== timestampToRemove);
  };
 
- const cancelAddTimestamp = () => appState.newTimestamp = null;
+
+ const exportTimestamps = () => {
+   const copyJson = JSON.stringify(appState.timestamps);
+   navigator.clipboard.writeText(copyJson);
+   showMessage('timestamps copied');
+ };
+
+ const toggleImport = () => {
+   appState.importVisible = !appState.importVisible;
+   appState.dataToImport = '';
+ }
+
+ const doImport = () => {
+   try {
+     const newTsData = JSON.parse(appState.dataToImport);
+     appState.importVisible = false;
+     appState.timestamps = newTsData.map(dateString => new Date(dateString));
+     appState.newTimestamp = null;
+     saveToLocalStorage(name, newTsData);
+     showMessage('imported JSON', 0);
+   } catch (e) {
+     showMessage('error importing JSON', 1);
+   }
+ };
+
+ const cancelAddTimestamp = () => {
+   appState.newTimestamp = null;
+   clearMessage();
+ }
 
  const reset = () => {
    appState.timestamps = [];
    appState.newTimestamp = null;
    deleteFromLocalStorage(name);
+   showMessage('erased all data');
  };
 
  // copy the timestamps to the clipboard
@@ -100,6 +138,7 @@
                             .map(formatTimestamp)
                             .join('');
    navigator.clipboard.writeText(copyText);
+   showMessage('timestamps copied');
  };
 
  // chart functions
@@ -163,6 +202,10 @@
    margin-top: 1em;
  }
 
+ .import-input {
+   width: 100%;
+ }
+
  button.add {
    background: #e55;
  }
@@ -197,18 +240,33 @@
    margin: 0 0 10px 0;
  }
 
- .error-message {
-   color: red;
-   padding-top: 1em;
+ .message {
+   margin-bottom: .5em;
+   text-align: center;
+ }
+
+ .message > .level-0 {
+   background: #3f3;
+   padding: 0 .2em 0 .2em;
+   border-radius: 5px;
+ }
+
+ .message > .level-1 {
+   color: white;
+   background: #f00;
+   padding: 0 .2em 0 .2em;
+   border-radius: 4px;
  }
 
  .ts-list {
    height: 5em;
    overflow-y: auto;
+   border: 1px solid black;
  }
 
  svg {
    border: 1px solid black;
+   margin-bottom: .5em;
    background: #ddd;
  }
 
@@ -219,14 +277,16 @@
 
 <div class="component">
   <h1><img src="clock-icon-192.png" alt="clock icon" height="20px"/> {name}</h1>
+  {#if appState.message.text}
+  <div class="message">
+    <span class="level-{appState.message.level}">{appState.message.text}</span>
+  </div>
+  {/if}
   {#if !appState.newTimestamp}
   <button class="big" on:click={prepareNewTimestamp}>New</button>
   {:else}
   <button class="big add" on:click={addTimestamp}>Add</button>
   <button class="big" on:click={cancelAddTimestamp}>Cancel</button>
-  {#if appState.errorMessage}
-  <div class="error-message">{appState.errorMessage}</div>
-  {/if}
   <div class="date-input">
     <input class="date-2" bind:value={appState.newTimestamp.date} inputmode="numeric"/>/<input class="date-2" bind:value={appState.newTimestamp.month1} inputmode="numeric"/>
     @
@@ -250,8 +310,14 @@
     <rect x="{dayOfTimestamp(t)}" y="{timeOfTimestamp(t)/1000}" width="1" height="1000" fill="red"/>
     {/each}
   </svg>
-
-
-
+  <button class="small" on:click={exportTimestamps}>Export</button>
   {/if}
+
+  <button class="small" on:click={toggleImport}>Import</button>
+  {#if appState.importVisible}
+  <input class="import-input" bind:value={appState.dataToImport}/>
+  <button class="small" on:click={doImport}>Go</button>
+  {/if}
+
+
 </div>
